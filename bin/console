@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+// application.php
+
+require dirname(__DIR__).'/vendor/autoload.php';
+
+use App\Commands\SetFakeDataCommand;
+use Symfony\Component\Console\Application;
+
+(Dotenv\Dotenv::createImmutable(dirname(__DIR__)))->load();
+
+$application = new Application();
+
+$application->add(new SetFakeDataCommand());
+
+$application->run();

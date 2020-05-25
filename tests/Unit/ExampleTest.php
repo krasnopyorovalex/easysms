@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace League\Skeleton;
+namespace Tests\Unit;
 
 class ExampleTest extends \PHPUnit\Framework\TestCase
 {
