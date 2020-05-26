@@ -6,13 +6,13 @@ namespace App\EntityRepositories;
 
 use Doctrine\ORM\EntityRepository;
 
-class PostRepository extends EntityRepository
+final class PostRepository extends EntityRepository
 {
-    public function findByTitle(string $title)
+    public function searchByTitle(string $keyword)
     {
-        $dql = "SELECT p FROM Post p WHERE LIKE p.title '%{$title}%'";
-
-        $query = $this->getEntityManager()->createQuery($dql);
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT p FROM App\Entities\Post p WHERE p.title LIKE :keyword");
+        $query->setParameter('keyword', '%'.$keyword.'%');
 
         return $query->getResult();
     }

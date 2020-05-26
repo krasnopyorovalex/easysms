@@ -23,7 +23,7 @@ class SetFakeDataCommand extends Command
 {
     private const AUTHORS_COUNT = 2000;
     private const POSTS_COUNT = 100000;
-    private const CATEGORIES_COUNT = 2500;
+    private const CATEGORIES_COUNT = 1200;
     private const BATCH_SIZE = 200;
 
     protected static $defaultName = 'db:set-data';
@@ -135,6 +135,7 @@ class SetFakeDataCommand extends Command
      */
     private function createCategories()
     {
+        $count = 0;
         for ($i = 1; $i <= self::CATEGORIES_COUNT; $i++) {
             $hierarchy = rand(2, 3);
             $countChild = rand(0, 3);
@@ -145,7 +146,6 @@ class SetFakeDataCommand extends Command
 
                 if ($j > 1 && isset($parentCategory)) {
                     $category->addParent($parentCategory);
-                    $parentCategory = $category;
                     $this->em->persist($category);
 
                     if ($countChild) {
@@ -156,6 +156,7 @@ class SetFakeDataCommand extends Command
                         }
                     }
                 }
+                $parentCategory = $category;
             }
 
             if (($i % self::BATCH_SIZE) === 0) {
@@ -164,7 +165,15 @@ class SetFakeDataCommand extends Command
             }
         }
         $this->em->flush();
-        $this->em->clear();
+        $this->em->clear(Category::class);
+
+        $categories = $this->em->getRepository(Category::class)->findAll();
+        foreach ($categories as $category) {
+            $category->setPath();
+
+            $this->em->persist($category);
+            $this->em->flush();
+        }
     }
 
     /**

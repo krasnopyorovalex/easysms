@@ -18,9 +18,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity
  * @Table(name="categories")
- * @ORM\Entity(repositoryClass="App\EntityRepositories\CategoryRepository")
+ * @Entity(repositoryClass="App\EntityRepositories\CategoryRepository")
  */
 class Category
 {
@@ -56,6 +55,12 @@ class Category
      * @var string
      */
     private $name;
+
+    /**
+     * @Column(type="string", length=512, nullable=true)
+     * @var string
+     */
+    private $path;
 
     public function __construct(string $name)
     {
@@ -101,5 +106,28 @@ class Category
     public function addPost(Post $post)
     {
         $this->posts[] = $post;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    public function setPath()
+    {
+        $this->path = $this->getParent()
+            ? sprintf('%s%s/', $this->getParent()->getPath(), $this->getId())
+            : sprintf('/%s/', $this->getId());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

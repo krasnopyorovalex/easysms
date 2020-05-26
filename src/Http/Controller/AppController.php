@@ -6,6 +6,7 @@ namespace App\Http\Controller;
 
 use App\Http\Traits\DataManagerTrait;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class AppController
 {
@@ -15,6 +16,11 @@ class AppController
      * @var EntityManager
      */
     protected $em;
+
+    /**
+     * @var EntityRepository
+     */
+    protected $repository;
 
     /**
      * AuthorController constructor.

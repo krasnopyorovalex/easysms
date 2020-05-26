@@ -14,9 +14,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="App\EntityRepositories\AuthorRepository")
  * @Table(name="authors")
- * @ORM\Entity(repositoryClass="App\EntityRepositories\AuthorRepository")
  */
 class Author
 {

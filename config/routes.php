@@ -26,6 +26,7 @@ $router
         $router->map('GET', '/authors', 'App\Http\Controller\AuthorController');
         $router->map('GET', '/news/{id:number}/view', 'App\Http\Controller\PostController::view');
         $router->map('GET', '/news/search', 'App\Http\Controller\PostController::search');
+        $router->map('GET', '/categories/{id:number}/news/search', 'App\Http\Controller\CategoryController::search');
     });
 
 $response = $router->dispatch($request);

@@ -15,9 +15,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity
  * @Table(name="posts")
- * @ORM\Entity(repositoryClass="App\EntityRepositories\PostRepository")
+ * @Entity(repositoryClass="App\EntityRepositories\PostRepository")
  */
 class Post
 {
