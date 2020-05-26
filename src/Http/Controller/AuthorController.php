@@ -6,7 +6,9 @@ namespace App\Http\Controller;
 
 use App\Entities\Author;
 use App\Http\Transformers\AuthorTransformer;
+use App\Http\Transformers\PostTransformer;
 use Doctrine\ORM\EntityManager;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AuthorController extends AppController
 {
@@ -16,10 +18,17 @@ class AuthorController extends AppController
         $this->repository = $this->em->getRepository(Author::class);
     }
 
-    public function __invoke() : array
+    public function index(): array
     {
         $authors = $this->repository->findAll();
 
         return $this->collection($authors, new AuthorTransformer);
+    }
+
+    public function news(ServerRequestInterface $request): array
+    {
+        $author = $this->repository->find((int) $request->getAttribute('id'));
+
+        return $this->collection($author->getPosts(), new PostTransformer);
     }
 }
