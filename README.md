@@ -14,7 +14,7 @@ $ copy .env.example .env
 $ composer install
 ```
 
-Запустить скрипт для генерации тестовых данных или импортировать дамб базы - easysms.sql.gz
+Запустить скрипт для генерации тестовых данных или импортировать дамп базы - easysms.sql.gz
 
 ``` bash
 $ php bin/console db:set-data
